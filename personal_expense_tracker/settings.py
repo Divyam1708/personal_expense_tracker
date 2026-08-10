@@ -18,7 +18,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env=environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR,'.env'))
+environ.Env.read_env(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -157,3 +157,6 @@ AUTH_USER_MODEL='accounts.user'
 
 
 EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend"
+
+
+CSRF_FAILURE_VIEW = 'accounts.views.csrf_error_page'

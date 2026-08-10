@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPENSES</title>
+    <style>
+        a{
+            text-decoration: none;
+            color: inherit;
+        }
+        form{
+            border: 2px solid;
+            max-width: fit-content;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+        #expenses{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #calendar{
+            display: grid;
+            grid-template-columns: repeat(7,1fr);
+            width: fit-content;
+            border: 1px solid;
+        }
+        #calendar>div{
+            border: 0.5px solid;
+            text-align: center;
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="border:2px solid; width:fit-content;">
+        CREATE EXPENSES
+    </div>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {% if create_expense_form.non_field_errors %}
+            {% for error in user_create_form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        {% endif %}
+
+        <table>
+
+            {% for field in create_expense_form %}
+            
+                <tr>
+
+                    {% if field.errors %}  
+                    {% for error in field.errors %}
+                    <span>
+                        {{ error }}
+                    </span>
+                    {% endfor %}
+                    {% endif %}
+                    <td>
+                        {{ field.label }}
+                    </td>
+                    <td>
+                         {{ field }}
+                    </td>
+                    
+                    
+                </tr>
+            {% endfor %}
+
+        </table>
+        <input type="hidden" name="create_expense_post_form">
+        <button id="create_expense_submit"  type="submit">
+            LIST EXPENSE
+        </button>
+    </form>
+
+    <div>
+        <p>
+            HIGHEST EXPENSE: {{ highest_expense }}
+        </p>
+    </div>
+    <div style="border: 2px solid;width:fit-content;padding:1rem; display:flex; flex-direction:column;justify-content:center;">
+
+        <div>
+            EXPENSE OF CURRENT MONTH : {% now "F (mS), Y" %}
+        </div>
+        
+        <div id="expenses">
+            <table border="5">
+                
+                <thead>
+                    <td>AMOUNT (₹) </td>
+                    <td>DAY</td>
+                    <td>TIME</td>
+                    <td>DETAILS</td>
+                </thead>
+                {% for expense in expenses %}
+                
+                <tr>
+                    
+                    <td style="text-align:end;">
+                        {{ expense.amount }}
+                    </td>
+                    <td>
+                        {{ expense.date_time|date:'j/m/Y' }}
+                    </td>
+                    <td>
+                        {{ expense.date_time|date:'H:i'  }}
+                    </td>
+                    <td>
+                        <a target="_blank" href="https://www.google.com">
+                            See details
+                        </a>
+                    </td>
+                    
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+    <div>
+        <div>   {{ current_date|date:'F, Y' }}</div>
+        <div id="calendar">
+            
+            {% for day in current_month_days %}
+            <div>
+                <a href="{% url 'expenses:day_based_expenses' arg_1_day=day arg_2_month=current_date.month arg_3_year=current_date.year %}">
+                    {{ day }}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+   
+    DAY BASED
+    <form action="" method="get">
+        {{ day_based_expenses_get_form }}
+        <input type="hidden" name="day_based_expenses_get_form">
+        <button type="submit">Find</button>
+    </form>
+</body>
+</html>

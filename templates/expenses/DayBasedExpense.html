@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for expense in expenses %}
+        <div>
+            {{expense.amount}} {{expense.date_time}}
+        </div>
+    {% endfor %}
+
+    Related Months calender for visit.
+    <div>
+        <div>   {{ current_month }}, {{ current_year }}</div>
+        <div id="calendar">
+            
+            {% for day in current_month_days %}
+            <div>
+                <a href="{% url 'expenses:day_based_expenses' arg_1_day=day arg_2_month=current_month arg_3_year=current_year %}">
+                    {{ day }}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
