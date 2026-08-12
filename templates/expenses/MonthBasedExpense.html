@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        {% for expense in expenses %}
+        <div>
+            {{ expense.amount }}   |   {{  expense.date_time|date:'m ' }}
+        </div>
+        {% endfor %}
+
+    </div>
+    <div>
+        {% for day in current_month_days %}
+            {{ day }}
+        {% endfor %}
+    </div>
+    <div>
+        {{ current_month }}
+    </div>
+    <div>
+        {{ current_year }}
+    </div>
+    <div>
+        STATS:
+        <div>
+            <ul>
+                <li>HIGHEST: {{ maximum_expense|floatformat:2 }} </li>
+                <li>LOWEST: {{ minimum_expense|floatformat:2 }}</li>
+                <li>AVERAGE: {{ average_expense|floatformat:2 }} </li>
+                <li>TOTAL: {{ total_expense|floatformat:2 }}</li>
+                <li>TIMES: {{ number_of_expenses|floatformat:2 }} </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

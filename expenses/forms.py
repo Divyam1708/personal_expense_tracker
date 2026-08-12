@@ -47,3 +47,13 @@ class DayBasedExpensesGetForm(forms.Form):
     year=forms.ChoiceField(choices=YEAR_CHOICES, initial=timezone.now().year)
     
     
+class MonthBasedExpensesGetForm(forms.Form):
+    YEAR_CHOICES=[(y,y) for y in range(2020, datetime.date.today().year+4)]
+    MONTH_CHOICES=[(m,m) for m in range(1,13)]
+   
+    month=forms.ChoiceField(choices=MONTH_CHOICES,initial=timezone.now().month)
+    year=forms.ChoiceField(choices=YEAR_CHOICES, initial=timezone.now().year)
+    
+    
+    
+    

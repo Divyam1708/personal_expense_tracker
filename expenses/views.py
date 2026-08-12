@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse,redirect,reverse
 from .models import MonthlyBudget, Expenses
 from .forms import CreateMonthlyBudgetForm, CreateExpenseForm
-from .forms import DayBasedExpensesGetForm
+from .forms import DayBasedExpensesGetForm, MonthBasedExpensesGetForm
 import calendar
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -13,6 +13,7 @@ from django.db.models import Sum,Max, Min, Avg, Count
 def home(request):
     
     
+    # POST FORM HANDLING
     if (request.method=='POST'):
         create_expense_form=CreateExpenseForm(request.POST, prefix='create_expense_form')
         
@@ -28,8 +29,10 @@ def home(request):
         create_expense_form=CreateExpenseForm(prefix='create_expense_form')
         
         
+    # GET FORM HANDLING
     if (request.method=='GET'):
         day_based_expenses_get_form=DayBasedExpensesGetForm()
+        month_based_expenses_get_form=MonthBasedExpensesGetForm()
         
         if ('day_based_expenses_get_form' in request.GET):
             day_based_expenses_get_form=DayBasedExpensesGetForm(request.GET)
@@ -44,11 +47,26 @@ def home(request):
                 })
                 return redirect(url)
             
+            
+        elif ('month_based_expenses_get_form' in request.GET):
+            month_based_expenses_get_form=MonthBasedExpensesGetForm(request.GET)
+            if(month_based_expenses_get_form.is_valid()):
+                month_based_expenses_get_form_month=month_based_expenses_get_form.cleaned_data['month']
+                month_based_expenses_get_form_year=month_based_expenses_get_form.cleaned_data['year']
+                url =reverse('expenses:month_based_expenses', kwargs={
+                    'arg_1_month': month_based_expenses_get_form_month,
+                    'arg_2_year': month_based_expenses_get_form_year,
+                })
+                return redirect(url)
+                
+                
+                
         
     today=timezone.now()
     expenses=Expenses.objects.filter(user=request.user)
     expenses_this_month=expenses.filter(date_time__month=today.month,date_time__year=today.year).order_by('-date_time')
     highest_expense=expenses_this_month.aggregate(max=Max('amount'),avg=Avg('amount'))
+    highest_expense_date_time=expenses_this_month.filter(amount=highest_expense['max']).first().date_time
     
     
     return render(
@@ -58,9 +76,11 @@ def home(request):
             
             'create_expense_form':create_expense_form,
             'day_based_expenses_get_form':day_based_expenses_get_form,
+            'month_based_expenses_get_form':month_based_expenses_get_form,
             
             'expenses':expenses_this_month,
-            'highest_expense':highest_expense,
+            'highest_expense':highest_expense['max'],
+            'highest_expense_date_time':highest_expense_date_time,
             'current_month_days': range(1,calendar.monthrange(today.year,today.month)[1]+1),
             'current_date': today,
     
@@ -81,5 +101,34 @@ def DayBasedExpenses(request,arg_1_day,arg_2_month,arg_3_year):
             'current_month_days': range(1,calendar.monthrange(arg_3_year,arg_2_month)[1]+1),
             'current_month': arg_2_month,
             'current_year':arg_3_year, 
+        }
+    )
+    
+    
+    
+@login_required(login_url='accounts:login_user')
+def MonthBasedExpenses(request,arg_1_month,arg_2_year):
+    
+    expenses=Expenses.objects.filter(user=request.user,date_time__month=arg_1_month,date_time__year=arg_2_year)
+    calculated_expenses=expenses.aggregate(max=Max('amount'),min=Min('amount'),avg=Avg('amount'),sum=Sum('amount'),count=Count('amount'))
+    maximum_expense_current_month=calculated_expenses['max']
+    minimum_expense_current_month=calculated_expenses['min']
+    average_expense_current_month=calculated_expenses['avg']
+    total_expense_current_month=calculated_expenses['sum']
+    number_of_times_expensed=calculated_expenses['count']
+    
+    return render(
+        request,
+        'expenses/MonthBasedExpense.html',
+        context={
+            'expenses':expenses,
+            'current_month_days': range(1,calendar.monthrange(arg_2_year,arg_1_month)[1]+1),
+            'current_month': arg_1_month,
+            'current_year':arg_2_year, 
+            'maximum_expense':maximum_expense_current_month,
+            'minimum_expense':minimum_expense_current_month,
+            'average_expense':average_expense_current_month,
+            'total_expense':total_expense_current_month,
+            'number_of_expenses':number_of_times_expensed,
         }
     )

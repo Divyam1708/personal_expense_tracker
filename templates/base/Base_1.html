@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block title %}
+            Base File
+            {% endblock title %}
+        </title>
+        {% block carry_over_css_files %}
+            <link rel="stylesheet" href="{% static 'base/styles/base_1.css' %}">
+        {% endblock carry_over_css_files  %}
+        {% block new_css_files %}
+        
+        {% endblock new_css_files  %}
+        
+</head>
+<body>
+    {% block body %}
+        BASE BODY
+    {% endblock body %}
+</body>
+</html>

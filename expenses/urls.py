@@ -6,5 +6,6 @@ app_name='expenses'
 urlpatterns = [
     path('',views.home,name='home'),
     path('<int:arg_1_day>-<int:arg_2_month>-<int:arg_3_year>',views.DayBasedExpenses,name='day_based_expenses'),
+    path('<int:arg_1_month>-<int:arg_2_year>',views.MonthBasedExpenses,name='month_based_expenses'),
     
 ]

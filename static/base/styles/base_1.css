@@ -3,4 +3,89 @@
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
+    font-size: 1rem;
 }
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+
+#calendar{
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    width: fit-content;
+    border: 1px solid;
+}
+#calendar>div{
+    border: 0.5px solid;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+
+.cancel_button_absolute{
+    position: absolute;
+    padding-inline: 0.25rem;
+    padding-block: 0.05rem;
+    border: 1px solid;
+    right: 1rem;
+}
+.cancel_button_absolute:hover{
+    background-color: red;
+    cursor: pointer;
+}
+.cancel_button_absolute:active{
+    background-color: blue;
+    cursor: pointer;
+    color: wheat;
+}
+
+
+.form_store_div{
+    border: 2px solid;
+    width:fit-content;
+    padding:1rem; 
+    position: relative;
+}
+
+
+.form{
+    display:flex; 
+    flex-direction:column;
+    justify-content:center;
+}
+
+.div_upper_end_2rem{
+    margin-top: 2rem;
+}
+
+.div_right_end_2rem{
+    margin-right: 2rem;
+}
+
+.padded_border{
+    border: 2px solid;
+    padding: 0.5rem;
+    margin-block: 0.5rem;
+}
+
+.feature_expander_button{
+    padding-inline: 0.5rem;
+    padding-block: 0.25rem;
+    border: 2px solid;
+    width: fit-content;
+}
+
+.feature_expander_button:hover{
+    background-color: aquamarine;
+    cursor: pointer;
+}
+
+.feature_expander_button:active{
+    background-color: greenyellow;
+    cursor: pointer;
+}
+
+
