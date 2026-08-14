@@ -56,4 +56,36 @@ class MonthBasedExpensesGetForm(forms.Form):
     
     
     
+class ExpenseRelatedImageForm(forms.ModelForm):
+    class Meta:
+        model=models.ExpensesRelatedImages
+        fields=['related_image']
     
+    
+class ExpenseDetailEditForm(forms.ModelForm):
+    class Meta:
+        model=models.Expenses
+        fields=['amount','date_time','about']
+        widgets={
+            'date_time':forms.DateTimeInput(
+                attrs={
+                    'type':'datetime-local',
+                }
+            ),
+            'amount':forms.NumberInput(
+                attrs={
+                    'type':'number',
+                    'min':'0',
+                    'step':'0.5',
+                    'placeholder':'1205.5'
+                }
+            ),
+            'about':forms.Textarea(
+                attrs={
+                    'cols':"24",
+                    'rows':"4"
+                }
+            )
+            
+        }
+        

@@ -18,6 +18,20 @@
         
 </head>
 <body>
+    <nav>
+        <div>
+            <a href="{% url 'expenses:home' %}">
+                HOME
+            </a>
+        </div>
+        <div>
+            {% if user.username %}
+                {{ user.username }}
+            {% else %}
+                {{ user.email }}
+            {% endif %}
+        </div>
+    </nav>
     {% block body %}
         BASE BODY
     {% endblock body %}

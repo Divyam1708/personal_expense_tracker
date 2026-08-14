@@ -1,41 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>
-        {% for expense in expenses %}
-        <div>
-            {{ expense.amount }}   |   {{  expense.date_time|date:'m ' }}
-        </div>
-        {% endfor %}
+{% extends 'base/Base_1.html' %}
 
+{% load static %}    
+
+{% block title%}
+    MONTHLY EXPENSE
+{% endblock title%}
+
+{% block new_css_files %}
+{% endblock new_css_files %}
+
+{% block body %}
+<section class="container">
+
+    
+     <div id="expenses">
+        <table border="5">
+            
+            <thead>
+                <td>AMOUNT (₹) </td>
+                <td>DAY</td>
+                <td>TIME</td>
+                <td>ABOUT</td>
+                <td>DETAILS</td>
+            </thead>
+            {% for expense in expenses %}
+            
+            <tr>
+                
+                <td style="text-align:end;">
+                    {{ expense.amount }}
+                </td>
+                <td>
+                    {{ expense.date_time|date:'j/m/Y' }}
+                </td>
+                <td>
+                    {{ expense.date_time|date:'H:i'  }}
+                </td>
+                <td>
+                    {{ expense.about|truncatewords_html:3  }}
+                </td>
+                <td>
+                    <a href="{% url 'expenses:expense_detail' arg_1_expense_query_slug=expense.query_slug %}">
+                        See details
+                    </a>
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </table>
     </div>
-    <div>
-        {% for day in current_month_days %}
-            {{ day }}
-        {% endfor %}
-    </div>
-    <div>
-        {{ current_month }}
-    </div>
-    <div>
-        {{ current_year }}
+
+
+
+    <div class="padded_border">
+        Related Months calender for visit.
+        <div>
+            <div>   {{ current_month }}, {{ current_year }}</div>
+            <div id="calendar">
+                
+                {% for day in current_month_days %}
+                <div>
+                    <a href="{% url 'expenses:day_based_expenses' arg_1_day=day arg_2_month=current_month arg_3_year=current_year %}">
+                        {{ day }}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
     <div>
         STATS:
         <div>
-            <ul>
-                <li>HIGHEST: {{ maximum_expense|floatformat:2 }} </li>
-                <li>LOWEST: {{ minimum_expense|floatformat:2 }}</li>
-                <li>AVERAGE: {{ average_expense|floatformat:2 }} </li>
-                <li>TOTAL: {{ total_expense|floatformat:2 }}</li>
-                <li>TIMES: {{ number_of_expenses|floatformat:2 }} </li>
-            </ul>
+            <table>
+                <tr>
+                    <td>
+                        HIGHEST
+                    </td>
+                    <td>
+                    : {{ maximum_expense|floatformat:2 }} 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        LOWEST
+                    </td>
+                    <td>
+                    : {{ minimum_expense|floatformat:2 }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        AVERAGE
+                    </td>
+                    <td>
+                    : {{ average_expense|floatformat:2 }} 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        TOTAL
+                    </td>
+                    <td>
+                    : {{ total_expense|floatformat:2 }} 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        TIMES
+                    </td>
+                    <td>
+                    : {{ number_of_expenses }} 
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
-</body>
-</html>
+</section>
+{% endblock body %}

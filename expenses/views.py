@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse,redirect,reverse
-from .models import MonthlyBudget, Expenses
-from .forms import CreateMonthlyBudgetForm, CreateExpenseForm
+from .models import MonthlyBudget, Expenses, ExpensesRelatedImages
+from .forms import CreateMonthlyBudgetForm, CreateExpenseForm, ExpenseRelatedImageForm
+from .forms import ExpenseDetailEditForm
 from .forms import DayBasedExpensesGetForm, MonthBasedExpensesGetForm
 import calendar
 from django.utils import timezone
@@ -9,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.db.models import Sum,Max, Min, Avg, Count
 
-@login_required(login_url='accounts:login_user')
+@login_required
 def home(request):
     
     
@@ -66,7 +67,7 @@ def home(request):
     expenses=Expenses.objects.filter(user=request.user)
     expenses_this_month=expenses.filter(date_time__month=today.month,date_time__year=today.year).order_by('-date_time')
     highest_expense=expenses_this_month.aggregate(max=Max('amount'),avg=Avg('amount'))
-    highest_expense_date_time=expenses_this_month.filter(amount=highest_expense['max']).first().date_time
+    highest_expense_date_time=expenses_this_month.filter(amount=highest_expense['max']).first()
     
     
     return render(
@@ -89,7 +90,7 @@ def home(request):
     
     
 
-@login_required(login_url='accounts:login_user')
+@login_required
 def DayBasedExpenses(request,arg_1_day,arg_2_month,arg_3_year):
     
     expenses=Expenses.objects.filter(user=request.user,date_time__day=arg_1_day,date_time__month=arg_2_month,date_time__year=arg_3_year)
@@ -106,7 +107,7 @@ def DayBasedExpenses(request,arg_1_day,arg_2_month,arg_3_year):
     
     
     
-@login_required(login_url='accounts:login_user')
+@login_required
 def MonthBasedExpenses(request,arg_1_month,arg_2_year):
     
     expenses=Expenses.objects.filter(user=request.user,date_time__month=arg_1_month,date_time__year=arg_2_year)
@@ -130,5 +131,70 @@ def MonthBasedExpenses(request,arg_1_month,arg_2_year):
             'average_expense':average_expense_current_month,
             'total_expense':total_expense_current_month,
             'number_of_expenses':number_of_times_expensed,
+        }
+    )
+    
+@login_required
+def ExpenseDetail(request,arg_1_expense_query_slug):
+    
+    try:
+        expense=Expenses.objects.get(query_slug=arg_1_expense_query_slug, user=request.user)
+    except Expenses.DoesNotExist as e:
+        return render(
+            request,
+            'base/Error_1.html',
+            context={
+                'message':f'{e} Please do not try to Violate.'
+            }
+        )
+        
+    if (request.method=='POST'):
+        if('expense_edit_detail_form' in request.POST):
+            expense_detail_edit_form=ExpenseDetailEditForm(request.POST, instance=expense)
+            if(expense_detail_edit_form.is_valid()):
+                expense.save()
+                url=reverse(
+                    'expenses:expense_detail',
+                    kwargs={
+                        'arg_1_expense_query_slug':arg_1_expense_query_slug,
+                    }
+                )
+                return  redirect(url)
+    
+    else:
+        expense_detail_edit_form=ExpenseDetailEditForm(instance=expense)
+            
+        
+    expense_related_images=ExpensesRelatedImages.objects.filter(expense=expense)
+    if request.method =='POST':
+        if('expense_related_image_form' in request.POST):
+            expense_related_image_form=ExpenseRelatedImageForm(request.POST, request.FILES)
+            if(expense_related_image_form.is_valid()):
+                ex_re_img_obj=expense_related_image_form.save(commit=False)
+                ex_re_img_obj.expense=expense
+                ex_re_img_obj.save()
+                url=reverse(
+                    'expenses:expense_detail',
+                    kwargs={
+                        'arg_1_expense_query_slug':arg_1_expense_query_slug,
+                    }
+                )
+                return redirect(url)
+                
+    else:
+        expense_related_image_form=ExpenseRelatedImageForm()
+        
+        
+    return render(
+        request,
+        'expenses/ExpenseDetail.html',
+        context={
+            'expense':expense,
+            
+            'expense_detail_edit_form':expense_detail_edit_form,
+            'expense_related_image_form':expense_related_image_form,
+            
+            'expense_related_images':expense_related_images,
+            
         }
     )

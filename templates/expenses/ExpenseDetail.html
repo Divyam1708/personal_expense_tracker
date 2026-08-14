@@ -1,0 +1,76 @@
+{% extends 'base/Base_1.html' %}
+{% load static %}
+
+{% block title %}
+    EXPENSE DETAIL
+{% endblock title %}
+{% block new_css_files %}
+    <link rel="stylesheet" href="{% static 'expenses/styles/ExpenseDetail.css' %}">
+{% endblock new_css_files  %}
+
+{% block body %}
+
+    <section class="container">
+        
+        <form action="" method="post" class="padded_border">
+            {% csrf_token %}
+            <div class="padded_border width_fit_content">
+                EXPENSE {{ expense_detail_edit_form.amount }} on {{ expense_detail_edit_form.date_time }}
+            </div>
+            <div class="padded_border">
+                <p>
+                    ABOUT: 
+                </p>
+                    
+                {{ expense_detail_edit_form.about }}
+            </div>
+            <input type="hidden" name="expense_edit_detail_form">
+            <button type="submit">EDIT</button>
+        </form>
+        
+        <div class="form_store_div">
+            
+            <form action="" method="post" enctype="multipart/form-data" class="form">
+                {% csrf_token %}
+                
+                {% if expense_related_image_form.non_field_errors %}
+                {% for error in expense_related_image_form.non_field_errors %}
+                {{ error }}
+                {% endfor %}
+                {% endif %}
+                
+                {% for field in expense_related_image_form%}
+                {% if field.errors %}  
+                {% for error in field.errors %}
+                <span>
+                    {{ error }}
+                </span>
+                {% endfor %}
+                {% endif %}
+                {{ field.label }} : {{ field }}
+                {% endfor %}
+                
+                <input type="hidden" name="expense_related_image_form">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        
+        
+        <div id="image_storage_section" class="padded_border width_fit_content">
+            <p>
+                RELATED IMAGE
+            </p>
+            <div id="image_div_storage" class="dispaly_flex">
+                {% for image in expense_related_images %}
+                <div class="form_store_div width_fit_content position_relative">
+                    <a href="">
+                        <div class="cancel_button_absolute"> X  </div>
+                    </a>
+                    <img style="width:200px;border:2px solid red;" src="{{ image.related_image.url }}" alt="" srcset="">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+        
+{% endblock body %}

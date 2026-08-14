@@ -11,6 +11,31 @@ a{
     color: inherit;
 }
 
+nav{
+    position: sticky;
+    top: 0px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: black;
+    color: white;
+    z-index: 5;
+}
+
+
+.hide{
+    display: none;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:0.5rem;
+    margin: auto;
+}
+
 
 #calendar{
     display: grid;
@@ -25,12 +50,14 @@ a{
 }
 
 
+
+
 .cancel_button_absolute{
     position: absolute;
     padding-inline: 0.25rem;
     padding-block: 0.05rem;
     border: 1px solid;
-    right: 1rem;
+    right: 0.5rem;
 }
 .cancel_button_absolute:hover{
     background-color: red;
@@ -46,7 +73,7 @@ a{
 .form_store_div{
     border: 2px solid;
     width:fit-content;
-    padding:1rem; 
+    padding:2rem; 
     position: relative;
 }
 
@@ -71,11 +98,28 @@ a{
     margin-block: 0.5rem;
 }
 
+.width_fit_content{
+    width: fit-content;
+}
+
+.position_relative{
+    position: relative;
+}
+.display_flex{
+    display: flex;
+    gap: 1rem;
+}
+.dispaly_flex_column{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
 .feature_expander_button{
     padding-inline: 0.5rem;
     padding-block: 0.25rem;
     border: 2px solid;
     width: fit-content;
+    background: green;
 }
 
 .feature_expander_button:hover{

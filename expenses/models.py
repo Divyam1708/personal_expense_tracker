@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.db import models
 from accounts.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
-
+from uuid import uuid4
 
 
 class Expenses(models.Model):
@@ -34,6 +34,11 @@ class Expenses(models.Model):
     about=models.TextField(
         null=True,
         blank=True,
+    )
+    query_slug=models.UUIDField(
+        default=uuid4,
+        unique=True,
+        editable=False,
     )
     
     
@@ -68,5 +73,17 @@ class MonthlyBudget(models.Model):
     class Meta:
         unique_together=('year','month','user')
         
-class ExpensesRelatedImage(models.Model):
-    pass
+class ExpensesRelatedImages(models.Model):
+    expense=models.ForeignKey(
+        Expenses,
+        on_delete=models.CASCADE,
+        null=False,
+    )
+    related_image=models.ImageField(
+        upload_to='expense_related_images/'
+    )
+    date_time_create=models.DateTimeField(
+        auto_now_add=True
+    )
+    
+    
