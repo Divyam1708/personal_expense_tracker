@@ -30,7 +30,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['15.206.90.217 ',]
+ALLOWED_HOSTS = ['15.206.90.217','localhost','127.0.0.1']
 
 
 # Application definition
@@ -164,6 +164,11 @@ LOGIN_URL=reverse_lazy('accounts:login_user')
 
 CSRF_FAILURE_VIEW = 'accounts.views.csrf_error_page'
 
-CSRF_COOKIE_SECURE=True
+# CSRF_COOKIE_SECURE=True
 
-SESSION_COOKIE_SECURE=True
+# SESSION_COOKIE_SECURE=True
+
+
+# CSRF_TRUSTED_ORIGINS = [
+#     "http://15.206.90.217:8000",
+# ]
