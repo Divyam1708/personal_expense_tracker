@@ -28,9 +28,9 @@ environ.Env.read_env(BASE_DIR / '.env')
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['15.206.90.217 ',]
 
 
 # Application definition
@@ -167,3 +167,7 @@ EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend"
 LOGIN_URL=reverse_lazy('accounts:login_user')
 
 CSRF_FAILURE_VIEW = 'accounts.views.csrf_error_page'
+
+CSRF_COOKIE_SECURE=True
+
+SESSION_COOKIE_SECURE=True
