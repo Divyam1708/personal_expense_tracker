@@ -28,9 +28,14 @@ environ.Env.read_env(BASE_DIR / '.env')
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['15.206.90.217','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['15.206.90.217',
+                 'localhost',
+                 '127.0.0.1',
+                 'personal-expense-tracker-mbjo.onrender.com',
+                 'onrender.com'
+                 ]
 
 
 # Application definition
