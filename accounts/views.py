@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 from accounts.forms import UserCreateForm, UserLoginForm
 
 
@@ -12,7 +13,6 @@ def RegisterUser(request):
             user_create_form=UserCreateForm(request.POST,prefix='user_create_form')
             if(user_create_form.is_valid()):
                 create_user_object=user_create_form.save(commit=False)
-                user_email=user_create_form.cleaned_data['email']
                 user_password=user_create_form.cleaned_data['password']
                 user_password2=user_create_form.cleaned_data['password2']
                 if user_password==user_password2:
@@ -62,8 +62,7 @@ def LoginUser(request):
         )
 
 
-
-
+@login_required
 def LoggedIn(request):
     
     return render(
@@ -77,10 +76,14 @@ def LoggedIn(request):
 
 
 
-
+@login_required
 def LogoutUser(request):
     logout(request)
     return redirect('accounts:login_user')
+
+
+
+
 
 def csrf_error_page(request,reason=''):
     return render(

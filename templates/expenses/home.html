@@ -5,12 +5,9 @@
     EXPENSES
 {% endblock title %}
 
-
-
 {% block new_css_files %}    
 <link rel="stylesheet" href="{% static 'expenses/styles/home_1.css' %}">
 {% endblock new_css_files %}    
-
 
 {% block body %}
 
@@ -20,7 +17,7 @@
         CREATE EXPENSES
     </div>
     
-    <div id="create_expense_form_div" class="form_store_div hide">
+    <div id="create_expense_form_div" class="elevated_store_div hide">
         <div id="create_expense_form_cancel_button" class="cancel_button_absolute">X</div>
         <form action="" method="post" class="form div_upper_end_2rem" >
             {% csrf_token %}
@@ -62,56 +59,59 @@
         </form>
     </div>
     
-    <div>
-        <p>
-            HIGHEST EXPENSE: {{ highest_expense }} on {{ highest_expense_date_time.date_time }}
-        </p>
-    </div>
+    <div class="elevated_store_div">
 
-    
-    <div class="padded_border" >
-        
         <div>
-            EXPENSE OF CURRENT MONTH : {% now "F (mS), Y" %}
+            <p>
+                HIGHEST EXPENSE: {{ highest_expense }} on {{ highest_expense_date_time.date_time }}
+            </p>
         </div>
         
-        <div id="expenses">
-            <table border="5">
-                
-                <thead>
-                    <td>AMOUNT (₹) </td>
-                    <td>DAY</td>
-                    <td>TIME</td>
-                    <td>ABOUT</td>
-                    <td>DETAILS</td>
-                </thead>
-                {% for expense in expenses %}
-                
-                <tr>
-                    
-                    <td style="text-align:end;">
-                        {{ expense.amount }}
-                    </td>
-                    <td>
-                        {{ expense.date_time|date:'j/m/Y' }}
-                    </td>
-                    <td>
-                        {{ expense.date_time|date:'H:i'  }}
-                    </td>
-                    <td>
-                        {{ expense.about|truncatewords_html:3 }}
-                    </td>
-                    <td>
-                        <a href="{% url 'expenses:expense_detail' arg_1_expense_query_slug=expense.query_slug %}">
-                            See details
-                        </a>
-                    </td>
-                    
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
         
+        <div class="padded_border" >
+            
+            <div>
+                EXPENSE OF CURRENT MONTH : {% now "F (mS), Y" %}
+            </div>
+            
+            <div id="expenses">
+                <table border="5">
+                    
+                    <thead>
+                        <td>AMOUNT (₹) </td>
+                        <td>DAY</td>
+                        <td>TIME</td>
+                        <td>ABOUT</td>
+                        <td>DETAILS</td>
+                    </thead>
+                    {% for expense in expenses %}
+                    
+                    <tr>
+                        
+                        <td style="text-align:end;">
+                            {{ expense.amount }}
+                        </td>
+                        <td>
+                            {{ expense.date_time|date:'j/m/Y' }}
+                        </td>
+                        <td>
+                            {{ expense.date_time|date:'H:i'  }}
+                        </td>
+                        <td>
+                            {{ expense.about|truncatewords_html:3 }}
+                        </td>
+                        <td>
+                            <a href="{% url 'expenses:expense_detail' arg_1_expense_query_slug=expense.query_slug %}">
+                                See details
+                            </a>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            
+        </div>
     </div>
 
     <!-- CALENDAR -->
@@ -119,7 +119,7 @@
         MONTH CALENDAR BASED SERACH
     </div>
 
-    <div id="calendar_div" class="form_store_div hide">
+    <div id="calendar_div" class="elevated_store_div hide">
         <div id="calendar_cancel_button" class="cancel_button_absolute">X</div>
         <div class="div_upper_end_2rem">
             {{ current_date|date:'F, Y' }}
@@ -141,7 +141,7 @@
     <div id="show_find_by_date_form_button" class="feature_expander_button">
         DATE BASED SERACH
     </div>
-    <div id="find_by_date_form_div" class="form_store_div hide">
+    <div id="find_by_date_form_div" class="elevated_store_div hide">
         <div id="find_by_date_form_cancel_button" class="cancel_button_absolute">X</div>
         <form action="" method="get" class="form div_right_end_2rem">
             <div class="display_flex">
@@ -157,7 +157,7 @@
     <div id="show_find_by_month_form_button" class="feature_expander_button">
         MONTH BASED SERACH
     </div>
-    <div id="find_by_month_form_div" class="form_store_div hide">
+    <div id="find_by_month_form_div" class="elevated_store_div hide">
         <div id="find_by_month_form_cancel_button" class="cancel_button_absolute">X</div>
         <form action="" method="get" class="form div_right_end_2rem">
             <div class="display_flex">

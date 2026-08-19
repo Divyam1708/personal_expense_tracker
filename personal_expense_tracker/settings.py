@@ -28,7 +28,7 @@ environ.Env.read_env(BASE_DIR / '.env')
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['15.206.90.217',
                  'localhost',
@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'expenses',
     'accounts',
     'templates',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -90,6 +92,10 @@ WSGI_APPLICATION = 'personal_expense_tracker.wsgi.application'
 
 DATABASES = {
     'default':{
+        'ENGINE':'django.db.backends.sqlite3',
+        'NAME':BASE_DIR/'db.sqlite3',
+    },
+    'neon_postgresql':{
         'ENGINE':'django.db.backends.postgresql',
         'NAME': env('postgresql_neon_NAME'),
         'USER': env('postgresql_neon_USER'),
@@ -102,6 +108,23 @@ DATABASES = {
         }
     },
 }
+
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": env('cloudinary_cloud_name'),
+    "API_KEY": env('cloudinary_API_KEY'),
+    "API_SECRET": env('cloudinary_API_SECRET'),
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
 
 
 # Password validation
@@ -147,15 +170,14 @@ STATICFILES_DIRS=[
 STATIC_ROOT=BASE_DIR/'staticfiles'
 
 
-MEDIA_URL='/media/'
+# MEDIA_URL='/media/'
 
-MEDIA_ROOT='uploads'
+# MEDIA_ROOT='uploads'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 AUTH_USER_MODEL='accounts.user'
 
@@ -169,9 +191,10 @@ LOGIN_URL=reverse_lazy('accounts:login_user')
 
 CSRF_FAILURE_VIEW = 'accounts.views.csrf_error_page'
 
-# CSRF_COOKIE_SECURE=True
 
-# SESSION_COOKIE_SECURE=True
+CSRF_COOKIE_SECURE=True
+
+SESSION_COOKIE_SECURE=True
 
 
 # CSRF_TRUSTED_ORIGINS = [

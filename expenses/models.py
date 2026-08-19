@@ -17,10 +17,12 @@ class Expenses(models.Model):
     )
     
     amount=models.DecimalField(
-        max_digits=10,
+        max_digits=9,
         decimal_places=2,
         validators=[
-            MinValueValidator(Decimal(('0.01')))
+            MinValueValidator(Decimal(('0.01'))),
+            MaxValueValidator(Decimal(('999999.99')))
+            
         ],
         null=False,
         blank=False

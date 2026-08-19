@@ -9,12 +9,12 @@
             Base File
             {% endblock title %}
         </title>
-        {% block carry_over_css_files %}
-            <link rel="stylesheet" href="{% static 'base/styles/base_1.css' %}">
-        {% endblock carry_over_css_files  %}
         {% block new_css_files %}
         
         {% endblock new_css_files  %}
+        {% block carry_over_css_files %}
+            <link rel="stylesheet" href="{% static 'base/styles/base_1.css' %}">
+        {% endblock carry_over_css_files  %}
         
 </head>
 <body>
@@ -25,11 +25,13 @@
             </a>
         </div>
         <div>
-            {% if user.username %}
+            <a href="{% url 'accounts:logged_in_user' %}">
+                {% if user.username %}
                 {{ user.username }}
-            {% else %}
+                {% else %}
                 {{ user.email }}
-            {% endif %}
+                {% endif %}
+            </a>
         </div>
     </nav>
     {% block body %}

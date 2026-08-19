@@ -11,6 +11,12 @@ a{
     color: inherit;
 }
 
+body{
+    position: relative;
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+}
+
 nav{
     position: sticky;
     top: 0px;
@@ -23,9 +29,6 @@ nav{
 }
 
 
-.hide{
-    display: none;
-}
 
 .container{
     display: flex;
@@ -36,6 +39,14 @@ nav{
     margin: auto;
 }
 
+.hide{
+    display: none;
+}
+
+.opacity_0{
+    filter:blur(10px);
+    z-index: 2;
+}
 
 #calendar{
     display: grid;
@@ -70,11 +81,15 @@ nav{
 }
 
 
-.form_store_div{
+.elevated_store_div{
     border: 2px solid;
     width:fit-content;
     padding:2rem; 
+    margin-bottom: 1rem;
     position: relative;
+    background-color: rgba(255,255,255,0.7);
+    color: green;
+    box-shadow: 10px 10px 20px black;
 }
 
 
@@ -117,13 +132,15 @@ nav{
 .feature_expander_button{
     padding-inline: 0.5rem;
     padding-block: 0.25rem;
-    border: 2px solid;
+    border: 2px solid black;
     width: fit-content;
     background: green;
+    color: white;
 }
 
 .feature_expander_button:hover{
     background-color: aquamarine;
+    color: black;
     cursor: pointer;
 }
 
@@ -133,3 +150,24 @@ nav{
 }
 
 
+
+.delete_button{
+    padding-inline: 0.5rem;
+    padding-block: 0.25rem;
+    border: 2px solid black;
+    width: fit-content;
+    background-color: rgba(255,0,0,1);
+    color: white;
+}
+
+.delete_button:hover{
+    background-color: rgb(154, 0, 0);
+    color: white;
+    cursor: pointer;
+}
+
+.delete_button:active{
+    background-color: rgb(3, 0, 0);
+    color: white;
+    cursor: pointer;
+}

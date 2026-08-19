@@ -8,6 +8,8 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+from django.shortcuts import get_object_or_404
+
 from django.db.models import Sum,Max, Min, Avg, Count
 
 @login_required
@@ -89,6 +91,16 @@ def home(request):
     )
     
     
+@login_required
+def DeleteExpense(request,arg_1_expense_query_slug):
+    expense_object=get_object_or_404(
+        Expenses,
+        user=request.user,
+        query_slug=arg_1_expense_query_slug
+    )
+    
+    expense_object.delete()
+    return redirect('expenses:home')
 
 @login_required
 def DayBasedExpenses(request,arg_1_day,arg_2_month,arg_3_year):
@@ -138,7 +150,7 @@ def MonthBasedExpenses(request,arg_1_month,arg_2_year):
 def ExpenseDetail(request,arg_1_expense_query_slug):
     
     try:
-        expense=Expenses.objects.get(query_slug=arg_1_expense_query_slug, user=request.user)
+        expense=get_object_or_404(Expenses, query_slug=arg_1_expense_query_slug, user=request.user)
     except Expenses.DoesNotExist as e:
         return render(
             request,
@@ -198,3 +210,20 @@ def ExpenseDetail(request,arg_1_expense_query_slug):
             
         }
     )
+    
+@login_required
+def DeleteExpenseRelatedImage(request,arg_1_image_id):
+    image_object=get_object_or_404(
+        ExpensesRelatedImages,
+        id=arg_1_image_id
+    )
+    expense=image_object.expense
+    image_object.delete()
+    
+    url=reverse(
+        'expenses:expense_detail',
+        kwargs={
+          'arg_1_expense_query_slug':expense.query_slug  
+        }
+    )
+    return redirect(url)

@@ -4,13 +4,29 @@
 {% block title %}
     EXPENSE DETAIL
 {% endblock title %}
+
 {% block new_css_files %}
     <link rel="stylesheet" href="{% static 'expenses/styles/ExpenseDetail.css' %}">
 {% endblock new_css_files  %}
 
 {% block body %}
 
-    <section class="container">
+    <section id="delete_confirmation_section"  class="delete_confirmation_section container hide">
+        <p>Do you really want to delete this expense?</p>
+        <div class="display_flex">
+            <div class="delete_button" >
+                <a href="{% url 'expenses:delete-expense' arg_1_expense_query_slug=expense.query_slug %}">
+                        Delete 
+                </a>
+            </div>
+            <div id="cancel_expense_delete_button" class="feature_expander_button"> 
+                Cancel 
+            </div>
+        </div>
+    </section>
+
+
+    <section id="main_section" class="container">
         
         <form action="" method="post" class="padded_border">
             {% csrf_token %}
@@ -28,7 +44,12 @@
             <button type="submit">EDIT</button>
         </form>
         
-        <div class="form_store_div">
+
+        <div id="delete_expense_create_button" class="delete_button">
+            DELETE
+        </div>
+
+        <div class="elevated_store_div">
             
             <form action="" method="post" enctype="multipart/form-data" class="form">
                 {% csrf_token %}
@@ -62,8 +83,8 @@
             </p>
             <div id="image_div_storage" class="dispaly_flex">
                 {% for image in expense_related_images %}
-                <div class="form_store_div width_fit_content position_relative">
-                    <a href="">
+                <div class="elevated_store_div width_fit_content position_relative">
+                    <a href="{% url 'expenses:delete-expense-related-image' arg_1_image_id=image.id %}">
                         <div class="cancel_button_absolute"> X  </div>
                     </a>
                     <img style="width:200px;border:2px solid red;" src="{{ image.related_image.url }}" alt="" srcset="">
@@ -72,5 +93,8 @@
             </div>
         </div>
     </section>
+
+    <script src="{% static  'expenses/scripts/expense_details_1.js' %}"></script>
+    
         
 {% endblock body %}

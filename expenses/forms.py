@@ -60,6 +60,13 @@ class ExpenseRelatedImageForm(forms.ModelForm):
     class Meta:
         model=models.ExpensesRelatedImages
         fields=['related_image']
+        widgets={
+            'related_image':forms.FileInput(
+                attrs={
+                    'accept':'image/jpeg, image/jpg, image/png, image/heic'
+                }
+            )
+        }
     
     
 class ExpenseDetailEditForm(forms.ModelForm):
