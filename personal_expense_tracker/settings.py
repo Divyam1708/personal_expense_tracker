@@ -92,10 +92,6 @@ WSGI_APPLICATION = 'personal_expense_tracker.wsgi.application'
 
 DATABASES = {
     'default':{
-        'ENGINE':'django.db.backends.sqlite3',
-        'NAME':BASE_DIR/'db.sqlite3',
-    },
-    'neon_postgresql':{
         'ENGINE':'django.db.backends.postgresql',
         'NAME': env('postgresql_neon_NAME'),
         'USER': env('postgresql_neon_USER'),
@@ -106,6 +102,10 @@ DATABASES = {
             'sslmode':'require',
             'channel_binding':'require'
         }
+    },
+    'local_sqlite3':{
+        'ENGINE':'django.db.backends.sqlite3',
+        'NAME':BASE_DIR/'db.sqlite3',
     },
 }
 
