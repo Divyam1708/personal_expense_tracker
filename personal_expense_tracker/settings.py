@@ -33,7 +33,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['15.206.90.217',
                  'localhost',
                  '127.0.0.1',
-                 'personal-expense-tracker-mbjo.onrender.com',
+                 'personal-expense-tracker-vnue.onrender.com',
                  'onrender.com'
                  ]
 
