@@ -28,14 +28,14 @@ environ.Env.read_env(BASE_DIR / '.env')
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['15.206.90.217',
-                 'localhost',
-                 '127.0.0.1',
-                 'personal-expense-tracker-vnue.onrender.com',
-                 'onrender.com'
-                 ]
+ALLOWED_HOSTS = [
+                '15.206.90.217',
+                'localhost',
+                '127.0.0.1',
+                'personal-expense-tracker-vnue.onrender.com',
+                ]
 
 
 # Application definition
@@ -47,22 +47,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'expenses',
     'accounts',
     'templates',
+    
     'cloudinary',
     'cloudinary_storage',
+    'django_cleanup'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'personal_expense_tracker.urls'
@@ -92,19 +95,20 @@ WSGI_APPLICATION = 'personal_expense_tracker.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default':{
+    #     'ENGINE':'django.db.backends.postgresql',
+    #     'NAME': env('postgresql_neon_NAME'),
+    #     'USER': env('postgresql_neon_USER'),
+    #     'PASSWORD': env('postgresql_neon_PASSWORD'),
+    #     'HOST': env('postgresql_neon_HOST'),
+    #     'PORT':'5432',
+    #     'OPTIONS':{
+    #         'sslmode':'require',
+    #         'channel_binding':'require'
+    #     }
+    # },
+    # 'local_sqlite3'
     'default':{
-        'ENGINE':'django.db.backends.postgresql',
-        'NAME': env('postgresql_neon_NAME'),
-        'USER': env('postgresql_neon_USER'),
-        'PASSWORD': env('postgresql_neon_PASSWORD'),
-        'HOST': env('postgresql_neon_HOST'),
-        'PORT':'5432',
-        'OPTIONS':{
-            'sslmode':'require',
-            'channel_binding':'require'
-        }
-    },
-    'local_sqlite3':{
         'ENGINE':'django.db.backends.sqlite3',
         'NAME':BASE_DIR/'db.sqlite3',
     },
@@ -193,9 +197,9 @@ LOGIN_URL=reverse_lazy('accounts:login_user')
 CSRF_FAILURE_VIEW = 'accounts.views.csrf_error_page'
 
 
-CSRF_COOKIE_SECURE=True
+# CSRF_COOKIE_SECURE=True
 
-SESSION_COOKIE_SECURE=True
+# SESSION_COOKIE_SECURE=True
 
 
 # CSRF_TRUSTED_ORIGINS = [

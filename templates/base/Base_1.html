@@ -24,7 +24,13 @@
                 HOME
             </a>
         </div>
-        <div>
+        <div class="display_flex">
+            <div id="theme_toggler_button" class="border-padded"> 
+                Switch to: 
+                <span id="toggle_to">
+                    Dark
+                </span> 
+            </div>
             <a href="{% url 'accounts:logged_in_user' %}">
                 {% if user.username %}
                 {{ user.username }}
@@ -34,8 +40,11 @@
             </a>
         </div>
     </nav>
-    {% block body %}
+    <section style="min-height:100dvh;">
+        {% block body %}
         BASE BODY
-    {% endblock body %}
+        {% endblock body %}
+    </section>
+    <script src="{% static 'base/scripts/base_1.js' %}"></script>
 </body>
 </html>
