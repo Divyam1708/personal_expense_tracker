@@ -39,7 +39,9 @@ nav{
     z-index: 5;
 }
 
-
+#theme_toggler_button:hover{
+    cursor: pointer;
+}
 
 .container{
     display: flex;

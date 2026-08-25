@@ -28,7 +28,8 @@ environ.Env.read_env(BASE_DIR / '.env')
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# FOR ENABLING
+# DEBUG = False
 
 ALLOWED_HOSTS = [
                 '15.206.90.217',
@@ -94,41 +95,38 @@ WSGI_APPLICATION = 'personal_expense_tracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    # 'default':{
-    #     'ENGINE':'django.db.backends.postgresql',
-    #     'NAME': env('postgresql_neon_NAME'),
-    #     'USER': env('postgresql_neon_USER'),
-    #     'PASSWORD': env('postgresql_neon_PASSWORD'),
-    #     'HOST': env('postgresql_neon_HOST'),
-    #     'PORT':'5432',
-    #     'OPTIONS':{
-    #         'sslmode':'require',
-    #         'channel_binding':'require'
-    #     }
-    # },
-    # 'local_sqlite3'
-    'default':{
-        'ENGINE':'django.db.backends.sqlite3',
-        'NAME':BASE_DIR/'db.sqlite3',
-    },
-}
+# FOR ENABLING
+# DATABASES = {
+#     'default':{
+#         'ENGINE':'django.db.backends.postgresql',
+#         'NAME': env('postgresql_neon_NAME'),
+#         'USER': env('postgresql_neon_USER'),
+#         'PASSWORD': env('postgresql_neon_PASSWORD'),
+#         'HOST': env('postgresql_neon_HOST'),
+#         'PORT':'5432',
+#         'OPTIONS':{
+#             'sslmode':'require',
+#             'channel_binding':'require'
+#         }
+#     },
+# }
 
 
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": env('cloudinary_cloud_name'),
-    "API_KEY": env('cloudinary_API_KEY'),
-    "API_SECRET": env('cloudinary_API_SECRET'),
-}
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+# FOR ENABLING
+# CLOUDINARY_STORAGE = {
+#     "CLOUD_NAME": env('cloudinary_cloud_name'),
+#     "API_KEY": env('cloudinary_API_KEY'),
+#     "API_SECRET": env('cloudinary_API_SECRET'),
+# }
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+#     },
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+# }
 
 
 
@@ -175,9 +173,6 @@ STATICFILES_DIRS=[
 STATIC_ROOT=BASE_DIR/'staticfiles'
 
 
-# MEDIA_URL='/media/'
-
-# MEDIA_ROOT='uploads'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -186,22 +181,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL='accounts.user'
 
-# SESSION_COOKIE_AGE=30*(24*(60*60))
-# SESSION_SAVE_EVERY_REQUEST=True
-
-
 EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend"
 
 LOGIN_URL=reverse_lazy('accounts:login_user')
 
 CSRF_FAILURE_VIEW = 'accounts.views.csrf_error_page'
 
+CSRF_COOKIE_SECURE=True
 
-# CSRF_COOKIE_SECURE=True
-
-# SESSION_COOKIE_SECURE=True
+SESSION_COOKIE_SECURE=True
 
 
 # CSRF_TRUSTED_ORIGINS = [
 #     "http://15.206.90.217:8000",
 # ]
+
+
+
+# DISABLE IN PRODUCTION, ONLY FOR DEVELOPMENT
+# FOR DISABLING
+DEBUG=True
+DATABASES = {
+    'default':{
+        'ENGINE':'django.db.backends.sqlite3',
+        'NAME':BASE_DIR/'db.sqlite3',
+    },
+}
+MEDIA_URL='/media/'
+
+MEDIA_ROOT='uploads'
+
