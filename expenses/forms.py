@@ -63,7 +63,7 @@ class ExpenseRelatedImageForm(forms.ModelForm):
         widgets={
             'related_image':forms.FileInput(
                 attrs={
-                    'accept':'image/jpeg, image/jpg, image/png'
+                    'accept':'image/jpeg, image/jpg, image/png, .pdf, .mov, .heic'
                 }
             )
         }
@@ -89,7 +89,7 @@ class ExpenseDetailEditForm(forms.ModelForm):
             ),
             'about':forms.Textarea(
                 attrs={
-                    'cols':"24",
+                    'cols':"52",
                     'rows':"4"
                 }
             )

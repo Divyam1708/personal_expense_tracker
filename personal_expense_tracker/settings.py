@@ -28,8 +28,8 @@ environ.Env.read_env(BASE_DIR / '.env')
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# FOR ENABLING
-# DEBUG = False
+# FOR ENABLING IN PRODUCTION
+DEBUG = False
 
 ALLOWED_HOSTS = [
                 '15.206.90.217',
@@ -95,38 +95,38 @@ WSGI_APPLICATION = 'personal_expense_tracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# FOR ENABLING
-# DATABASES = {
-#     'default':{
-#         'ENGINE':'django.db.backends.postgresql',
-#         'NAME': env('postgresql_neon_NAME'),
-#         'USER': env('postgresql_neon_USER'),
-#         'PASSWORD': env('postgresql_neon_PASSWORD'),
-#         'HOST': env('postgresql_neon_HOST'),
-#         'PORT':'5432',
-#         'OPTIONS':{
-#             'sslmode':'require',
-#             'channel_binding':'require'
-#         }
-#     },
-# }
+# FOR ENABLING IN PRODUCTION
+DATABASES = {
+    'default':{
+        'ENGINE':'django.db.backends.postgresql',
+        'NAME': env('postgresql_neon_NAME'),
+        'USER': env('postgresql_neon_USER'),
+        'PASSWORD': env('postgresql_neon_PASSWORD'),
+        'HOST': env('postgresql_neon_HOST'),
+        'PORT':'5432',
+        'OPTIONS':{
+            'sslmode':'require',
+            'channel_binding':'require'
+        }
+    },
+}
 
 
 
-# FOR ENABLING
-# CLOUDINARY_STORAGE = {
-#     "CLOUD_NAME": env('cloudinary_cloud_name'),
-#     "API_KEY": env('cloudinary_API_KEY'),
-#     "API_SECRET": env('cloudinary_API_SECRET'),
-# }
-# STORAGES = {
-#     "default": {
-#         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-#     },
-#     "staticfiles": {
-#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-#     },
-# }
+# FOR ENABLING IN PRODUCTION
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": env('cloudinary_cloud_name'),
+    "API_KEY": env('cloudinary_API_KEY'),
+    "API_SECRET": env('cloudinary_API_SECRET'),
+}
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 
@@ -200,14 +200,14 @@ SESSION_COOKIE_SECURE=True
 
 # DISABLE IN PRODUCTION, ONLY FOR DEVELOPMENT
 # FOR DISABLING
-DEBUG=True
-DATABASES = {
-    'default':{
-        'ENGINE':'django.db.backends.sqlite3',
-        'NAME':BASE_DIR/'db.sqlite3',
-    },
-}
-MEDIA_URL='/media/'
+# DEBUG=True
+# DATABASES = {
+#     'default':{
+#         'ENGINE':'django.db.backends.sqlite3',
+#         'NAME':BASE_DIR/'db.sqlite3',
+#     },
+# }
+# MEDIA_URL='/media/'
 
-MEDIA_ROOT='uploads'
+# MEDIA_ROOT='uploads'
 

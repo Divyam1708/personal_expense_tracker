@@ -10,7 +10,7 @@
 {% endblock new_css_files %}    
 
 {% block body %}
-    <section class="container">
+    <section class="container_full">
         <h1>LOGGED IN</h1>
         <p>USING EMAIL: {{ user.email }}.</p>
         {% if user.username %}
@@ -18,6 +18,9 @@
         {% else %}
         <p>No Username Added. </p>
         {% endif %}
+        <a href="{% url 'accounts:logout_user' %}">
+            <button class="delete_button" >LOGOUT</button>
+        </a>
     </section>
 
 {% endblock body %}
