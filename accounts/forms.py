@@ -37,3 +37,10 @@ class UserLoginForm(forms.Form):
         )
     )
 
+
+
+class UserInfoEditForm(forms.ModelForm):
+    class Meta:
+        model=models.User
+        exclude=['password','email','active','groups','last_login','is_superuser','is_active','is_staff','user_permissions','date_joined']
+    

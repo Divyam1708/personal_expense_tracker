@@ -63,7 +63,7 @@ class ExpenseRelatedImageForm(forms.ModelForm):
         widgets={
             'related_image':forms.FileInput(
                 attrs={
-                    'accept':'image/jpeg, image/jpg, image/png, .pdf, .mov, .heic'
+                    'accept':'image/jpeg, image/jpg, image/png'
                 }
             )
         }

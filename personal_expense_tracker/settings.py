@@ -30,17 +30,14 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 # FOR ENABLING IN PRODUCTION
 DEBUG = False
-
 ALLOWED_HOSTS = [
-                '15.206.90.217',
-                'localhost',
-                '127.0.0.1',
+                '15.206.90.217', #AWS PUBLIC
                 'personal-expense-tracker-vnue.onrender.com',
                 ]
 
 
-# Application definition
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -208,6 +205,5 @@ SESSION_COOKIE_SECURE=True
 #     },
 # }
 # MEDIA_URL='/media/'
-
 # MEDIA_ROOT='uploads'
 

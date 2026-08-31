@@ -15,7 +15,7 @@
         {% block carry_over_css_files %}
             <link rel="stylesheet" href="{% static 'base/styles/base_1.css' %}">
         {% endblock carry_over_css_files  %}
-        
+        <link rel="shortcut icon" href="{% static 'base/images/expense.png' %}" type="image/x-icon">
 </head>
 <body>
     <nav>
@@ -26,8 +26,7 @@
         </div>
         <div class="display_flex">
             <div id="theme_toggler_button" class="border-padded"> 
-                Switch to: 
-                <span id="toggle_to">
+                <span hidden id="toggle_to">
                     Dark
                 </span> 
             </div>

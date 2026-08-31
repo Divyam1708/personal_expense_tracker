@@ -18,6 +18,9 @@
         {% else %}
         <p>No Username Added. </p>
         {% endif %}
+        <a href="{% url 'accounts:edit-user-information' %}">
+            <button>Edit self information</button>
+        </a>
         <a href="{% url 'accounts:logout_user' %}">
             <button class="delete_button" >LOGOUT</button>
         </a>

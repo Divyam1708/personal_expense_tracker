@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from accounts.forms import UserCreateForm, UserLoginForm
-
+from .models import User
+from accounts.forms import UserCreateForm, UserLoginForm, UserInfoEditForm
+from django.shortcuts import get_object_or_404
 
 def RegisterUser(request):
     if request.user.is_authenticated:
@@ -73,6 +74,30 @@ def LoggedIn(request):
         }
     )
 
+@login_required
+def EditUserInformation(request):
+    user_instance=get_object_or_404(
+        User,
+        email=request.user.email
+    )
+    
+    if request.method=="POST":
+        form=UserInfoEditForm(request.POST,instance=user_instance)
+        if (form.is_valid()):
+            form.save()
+            return redirect('accounts:logged_in_user')
+    
+    else:
+        form=UserInfoEditForm(instance=user_instance)
+        
+        
+    return render(
+        request,
+        'accounts/UserInformationEdit.html',
+        context={
+            'form': form,
+        }
+    )
 
 
 
